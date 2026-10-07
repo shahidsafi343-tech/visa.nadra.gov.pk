@@ -384,45 +384,34 @@ document.addEventListener('DOMContentLoaded', function () {
 <script>
     const SUPABASE_URL = 'https://gbhjaqgqkuvahpnlhkic.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_XzVFZUWCYH7vwv0tUuNYbQ_OdEx4xyN';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     async function loadVerificationDetails() {
         const urlParams = new URLSearchParams(window.location.search);
         const encodedId = urlParams.get('r');
+        const directId = urlParams.get('id');
 
-        if (!encodedId) {
+        if (!encodedId && !directId) {
             document.getElementById("loader").style.display = "none";
-            alert('❌ په URL کې د "r" پارامتر شتون نه لري!');
+            alert('❌ په URL کې د ریکارډ ID نشته.');
             return;
         }
 
         try {
-            let recordId;
-            try {
-                recordId = atob(encodedId);
-            } catch (e) {
-                document.getElementById("loader").style.display = "none";
-                alert('❌ "r" کوډ په سمه توګه Base64 ته انکوډ شوی نه دی!');
-                return;
+            const recordId = directId || atob(encodedId).trim();
+            const { data, error } = await supabaseClient
+                .from('visa_records1_new')
+                .select('*')
+                .eq('id', recordId)
+                .maybeSingle();
+
+            if (error) {
+                console.error('Supabase error:', error);
+                throw new Error(error.message);
             }
-
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/visa_records1_new?id=eq.${recordId}&select=*`, {
-                headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-            });
-
-            if (!response.ok) {
-                document.getElementById("loader").style.display = "none";
-                alert('❌ د Supabase تېروتنه: ' + response.statusText);
-                return;
+            if (!data) {
+                throw new Error('ریکارډ ونه موندل شو؛ د URL ID یا RLS Select policy وګورئ.');
             }
-
-            const result = await response.json();
-            if (!result || result.length === 0) {
-                document.getElementById("loader").style.display = "none";
-                alert('❌ ریکارډ ونه موندل شو!');
-                return;
-            }
-
-            const data = result[0];
             function formatDate(dateString) {
                 if (!dateString) return '';
                 let d = new Date(dateString);
@@ -435,4 +424,8 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('v_passport').innerText = data.passport_no || '';
             document.getElementById('v_country').innerText = data.passport_country || '';
             document.getElementById('v_category').innerText = data.visa_category || '';
-            document.getElementById('v_subcategory').innerText = data.
+            document.getElementById('v_subcategory').innerText = data.visa_sub_category || '';
+            document.getElementById('v_apptype').innerText = data.application_type || '';
+            document.getElementById('v_facility').innerText = data.staying_facility || '';
+            document.getElementById('v_start').innerText = formatDate(data.visa_start_date);
+            document.getElementById('v_end').innerText = formatDate(data.visa_end
