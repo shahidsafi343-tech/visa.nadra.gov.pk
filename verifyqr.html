@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="j_idt2">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PAK VISA - Verification Portal</title>
+    
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <!-- ✅ محلي فایلونه -->
+    <link rel="stylesheet" type="text/css" href="uploads1/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="uploads1/ionicons.css">
+    <link rel="stylesheet" type="text/css" href="uploads1/shortcodes.css">        
+    <link rel="stylesheet" type="text/css" href="uploads1/style.css">
+    <link rel="stylesheet" type="text/css" href="uploads1/font-nadra.css">
+    <link rel="stylesheet" type="text/css" href="uploads1/responsive.css">
+    <link rel="stylesheet" type="text/css" href="uploads1/animate.css">
+    <link rel="stylesheet" type="text/css" href="uploads1/custom.css">
+    <link rel="stylesheet" type="text/css" href="uploads1/primefaces.css">
+    <link rel="stylesheet" type="text/css" href="uploads1/errormsg.css">
+
+    <!-- ✅ انټرنېټ فایلونه -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style type="text/css">
+        body {
+            font: 14px/24px "Poppins", sans-serif !important;
+            background-color: #fff;
+            color: #666666;
+        }
+        .preview__header {
+            font-size: 12px;
+            min-height: 35px;
+            background-color: #44aa68;
+            z-index: 100;
+            color: #fff;
+        }
+        .label-div { text-align: left; }
+        .value-div { text-align: left; }
+        @media (max-width: 991px) {
+            .label-div { text-align: center; }
+            .value-div { text-align: center; }
+        }
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .loading-effect-2 {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        .loading-effect-2 span {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid transparent;
+        }
+        .loading-effect-2 span:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            border-top: 2.5px solid #1f6fa5;
+            border-right: 2.5px solid #1f6fa5;
+            border-bottom: 2.5px solid #1f6fa5;
+            border-left: 2.5px solid transparent;
+            animation: spin 3s linear infinite;
+        }
+        .loading-effect-2 span:nth-child(2) {
+            width: 70px;
+            height: 70px;
+            top: 15px;
+            left: 15px;
+            border-top: 2.5px solid #1f6fa5;
+            border-right: 2.5px solid #1f6fa5;
+            border-bottom: 2.5px solid #1f6fa5;
+            border-left: 2.5px solid transparent;
+            animation: spinReverse 2.5s linear infinite;
+        }
+        .loading-effect-2 span:nth-child(3) {
+            width: 40px;
+            height: 40px;
+            top: 30px;
+            left: 30px;
+            border-top: 2.5px solid #1f6fa5;
+            border-right: 2.5px solid #1f6fa5;
+            border-bottom: 2.5px solid #1f6fa5;
+            border-left: 2.5px solid transparent;
+            animation: spin 3s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes spinReverse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+
+        /* ✅ د موبایل مینو تڼۍ اصلاح — ترڅو د پخواني CSS سره ټکر ونه کړي */
+        .btn-menu-new {
+            display: none;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 9999;
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            align-items: center;
+            justify-content: center;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* د پخواني کوډ د هر ډول سپان یا نورو شیانو لیرې کول */
+        .btn-menu-new span, 
+        .btn-menu-new::before, 
+        .btn-menu-new::after {
+            display: none !important;
+        }
+
+        .btn-menu-new svg {
+            width: 32px;
+            height: 32px;
+            color: #0068ac;
+            display: block;
+        }
+
+        /* ✅ د مینو سټایلونه — پر کلیک کولو به ښکاره شي */
+        @media (max-width: 991px) {
+            .btn-menu-new { display: flex; }
+            
+            .mainnav {
+                display: none;
+                position: fixed;
+                left: 0;
+                top: 70px;
+                width: 100%;
+                background: #ffffff;
+                border-top: 1px solid #eee;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                z-index: 9998;
+            }
+            
+            .mainnav.active {
+                display: block !important;
+            }
+            
+            .mainnav ul {
+                list-style: none;
+                margin: 0;
+                padding: 10px 0;
+                width: 100%;
+            }
+            .mainnav ul li {
+                display: block;
+                width: 100%;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            .mainnav ul li a {
+                display: block;
+                padding: 15px 25px;
+                color: #333;
+                text-decoration: none;
+                font-weight: 500;
+                text-transform: uppercase;
+                font-size: 14px;
+            }
+            .mainnav ul li a:hover {
+                background: #f8f9fa;
+                color: #0068ac;
+            }
+        }
+
+        /* ✅ کاپي رایټ سمون */
+        .footer-bottom {
+            padding: 20px 0;
+            background: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+        .copyright p {
+            font-size: 12px;
+            color: #777;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="preloader" id="loader">
+        <div class="loading-effect-2"><span></span></div>
+    </div>
+    
+    <div class="boxed">
+        <header id="header" class="header bg-color">
+            <div class="container" style="height: 70px; position: relative;">
+                <div class="row">
+                    <div class="header-wrap">
+                        <div class="col-md-4 col-xs-8">
+                            <div id="logo" class="logo">
+                                <a href="#"><img src="uploads1/pak_visa_logo.png" style="height:50px; margin-top: 10px;" alt="Logo"></a>
+                            </div>                            
+                        </div>
+                        
+                        <div class="col-md-8 col-xs-4">    
+                            <!-- ✅ د مینو نوې تڼۍ (Unique Class ترڅو اضافي خطونه لیرې شي) -->
+                            <button type="button" class="btn-menu-new" id="mobileMenuBtn" aria-label="Menu">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                </svg>
+                            </button>
+                            
+                            <div class="nav-wrap">
+                                <nav id="mainnav" class="mainnav">
+                                    <ul class="menu">
+                                        <li><a href="#" class="urduLang urduFont">Home</a></li>
+                                        <li><a href="https://visa.nadra.gov.pk/how-to-apply/" target="_blank">Guidelines</a></li>
+                                        <li><a href="https://visa.nadra.gov.pk/download/" target="_blank">Downloads</a></li>
+                                        <li><a href="https://visa.nadra.gov.pk/faqs/" target="_blank">FAQ</a></li>
+                                        <li><a href="https://visa.nadra.gov.pk/contact/" target="_blank">Contact Us</a></li>
+                                    </ul>
+                                </nav>                                                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <section class="flat-row">
+            <div class="container" style="margin-top: 40px;">
+                <div class="row pd-contact-v2">
+                    <div id="login-block" class="col-md-8 col-md-offset-2 animated slideInUp">
+                        <article class="post style2">
+                            <div class="content-post" style="text-align: center;">
+
+                                <h1 class="title-post text-center urduLang">
+                                    <a href="#">Visa Reference Number - <span id="v_ref">Loading...</span></a>
+                                </h1>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img id="v_photo" src="" class="applicant-photo" width="152px" style="display:none; border-radius: 5px; margin: auto;" alt="Photo">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-5 ct-u-padding0 ct-u-margin0 label-div"><label>NAME</label></div>
+                                            <div class="col-md-7 ct-u-padding0 ct-u-margin0 value-div"><p id="v_name" style="font-size: 15px;"></p></div>
+                                        </div>
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-5 ct-u-padding0 ct-u-margin0 label-div"><span style="font-size: 15px; font-weight: bold;">Passport No</span></div>
+                                            <div class="col-md-7 ct-u-padding0 ct-u-margin0 value-div"><p id="v_passport" style="font-size: 15px;"></p></div>
+                                        </div>
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-5 ct-u-padding0 ct-u-margin0 label-div"><span style="font-size: 15px; font-weight: bold;">Passport Country</span></div>
+                                            <div class="col-md-7 ct-u-padding0 ct-u-margin0 value-div"><p id="v_country" style="font-size: 15px;"></p></div>
+                                        </div>
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-5 ct-u-padding0 ct-u-margin0 label-div"><label>Visa Category</label></div>
+                                            <div class="col-md-7 ct-u-padding0 ct-u-margin0 value-div"><p id="v_category"></p></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-md-6">
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-5 ct-u-padding0 ct-u-margin0 label-div"><label>Visa Sub Category</label></div>
+                                            <div class="col-md-7 ct-u-padding0 ct-u-margin0 value-div"><p id="v_subcategory"></p></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-5 ct-u-padding0 ct-u-margin0 label-div"><label>Application Type</label></div>
+                                            <div class="col-md-7 ct-u-padding0 ct-u-margin0 value-div"><p id="v_apptype"></p></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-md-6">
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-5 ct-u-padding0 ct-u-margin0 label-div"><label>Staying Facility</label></div>
+                                            <div class="col-md-7 ct-u-padding0 ct-u-margin0 value-div"><p id="v_facility"></p></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-md-6">
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-5 ct-u-padding0 ct-u-margin0 label-div"><label>Visa Start Date</label></div>
+                                            <div class="col-md-7 ct-u-padding0 ct-u-margin0 value-div"><p id="v_start"></p></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-5 ct-u-padding0 ct-u-margin0 label-div"><label>Visa End Date</label></div>
+                                            <div class="col-md-7 ct-u-padding0 ct-u-margin0 value-div"><p id="v_end"></p></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-md-6">
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-5 ct-u-padding0 ct-u-margin0 label-div"><label>Visa Duration</label></div>
+                                            <div class="col-md-7 ct-u-padding0 ct-u-margin0 value-div"><p id="v_duration"></p></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row text-center ct-u-marginTop20" style="text-align: center; margin-top: 25px;">
+                                    <a href="https://visa.nadra.gov.pk/e-visa/authenticate" class="btn btn-success btn-lg button-submit">Back to Login</a>
+                                </div>
+
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer id="footer">
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="copyright text-uppercase text-center">
+                            <p class="urdufooter" style="width: 100%; margin-bottom:0;">
+                                COPYRIGHT &copy; 2015 - 2026 MINISTRY OF INTERIOR, GOVERNMENT OF PAKISTAN - All rights reserved - v: 6.0.2
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<!-- ✅ jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- ✅ د مینو کوډ -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainnav');
+    
+    if (menuBtn && mainNav) {
+        menuBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            mainNav.classList.toggle('active');
+        });
+
+        // د مینو څخه بهر کلیک کولو سره مینو بندول
+        document.addEventListener('click', function(event) {
+            if (!mainNav.contains(event.target) && !menuBtn.contains(event.target)) {
+                mainNav.classList.remove('active');
+            }
+        });
+    }
+});
+</script>
+
+<!-- ✅ د ډیټا بارولو کوډ -->
+<script>
+    const SUPABASE_URL = 'https://gbhjaqgqkuvahpnlhkic.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_XzVFZUWCYH7vwv0tUuNYbQ_OdEx4xyN';
+
+    async function loadVerificationDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const encodedId = urlParams.get('r');
+
+        if (!encodedId) {
+            document.getElementById("loader").style.display = "none";
+            alert('❌ په URL کې د "r" پارامتر شتون نه لري!');
+            return;
+        }
+
+        try {
+            let recordId;
+            try {
+                recordId = atob(encodedId);
+            } catch (e) {
+                document.getElementById("loader").style.display = "none";
+                alert('❌ "r" کوډ په سمه توګه Base64 ته انکوډ شوی نه دی!');
+                return;
+            }
+
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/visa_records1_new?id=eq.${recordId}&select=*`, {
+                headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+            });
+
+            if (!response.ok) {
+                document.getElementById("loader").style.display = "none";
+                alert('❌ د Supabase تېروتنه: ' + response.statusText);
+                return;
+            }
+
+            const result = await response.json();
+            if (!result || result.length === 0) {
+                document.getElementById("loader").style.display = "none";
+                alert('❌ ریکارډ ونه موندل شو!');
+                return;
+            }
+
+            const data = result[0];
+            function formatDate(dateString) {
+                if (!dateString) return '';
+                let d = new Date(dateString);
+                if (isNaN(d)) return dateString;
+                return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, '-');
+            }
+
+            document.getElementById('v_ref').innerText = data.visa_reference_number || '';
+            document.getElementById('v_name').innerText = data.full_name || '';
+            document.getElementById('v_passport').innerText = data.passport_no || '';
+            document.getElementById('v_country').innerText = data.passport_country ||
